@@ -37,7 +37,7 @@ jobs:
         fetch-depth: 1
         ssh-key: ${{ secrets.privateRepoDeployKey }}
         path: __repo
-        repository: git@github.com:ken0x0a/exp-private-repo.git
+        repository: ken0x0a/exp-private-repo
 
     - name: Print cwd &
       run: |
