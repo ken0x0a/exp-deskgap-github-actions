@@ -8,7 +8,8 @@ on:
     paths:
       - 'dist/**/*'               # match this pattern
       - 'electron-builder.js'     # match this pattern
-      - '.github/workflows/*.y[,a]ml' # or match this pattern
+      - '.github/workflows/*.yml' # or match this pattern
+      - '.github/workflows/*.yaml' # or match this pattern
       - '*.md'                   # but not match this
       - '!**/__fixtures__/**'     # and not match this
       - '!**/__tests__/**'        # and not match this
