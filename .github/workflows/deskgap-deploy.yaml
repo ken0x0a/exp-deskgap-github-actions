@@ -3,6 +3,8 @@ name: Deskgap!
 on:
   # Sequence of patterns matched against refs/heads
   push:
+    tags:
+      - "*"
     branches:    
       - master         # Push events on master branch
     paths:
