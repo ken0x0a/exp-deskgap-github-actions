@@ -1,0 +1,44 @@
+name: Deskgap!
+
+on:
+  # Sequence of patterns matched against refs/heads
+  push:
+    branches:    
+      - master         # Push events on master branch
+    paths:
+      - 'dist/**/*'               # match this pattern
+      - 'electron-builder.js'     # match this pattern
+      - '.github/workflows/*.y[,a]ml' # or match this pattern
+      - '!*.md'                   # but not match this
+      - '!**/__fixtures__/**'     # and not match this
+      - '!**/__tests__/**'        # and not match this
+
+jobs:
+  build:
+    name: Test
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix: # https://help.github.com/en/actions/reference/workflow-syntax-for-github-actions#jobsjob_idstrategymatrix
+        os: [ubuntu-latest]
+        # os: [macos-latest, ubuntu-latest] # https://help.github.com/en/actions/reference/workflow-syntax-for-github-actions#jobsjob_idstrategymatrix
+        node-version: [12.x]
+    # ## functions
+    # - https://help.github.com/en/actions/automating-your-workflow-with-github-actions/contexts-and-expression-syntax-for-github-actions#functions
+    # - https://help.github.com/en/actions/automating-your-workflow-with-github-actions/contexts-and-expression-syntax-for-github-actions#contains
+    if: "!contains(github.event.head_commit.message, '[skip ci]') && !contains(github.event.head_commit.message, '[ci skip]')"
+    steps:
+    - uses: actions/checkout@v2 # https://github.com/actions/checkout
+      with:
+        fetch-depth: 1
+    - uses: actions/checkout@v2 # https://github.com/actions/checkout
+      with:
+        fetch-depth: 1
+        ssh-key: ${{ secrets.privateRepoDeployKey }}
+        path: __repo
+        repository: git@github.com:ken0x0a/exp-private-repo.git
+
+    - name: Print cwd &
+      run: |
+        pwd
+        cat __repo/README.md
